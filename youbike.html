@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>YouBike 站點資訊</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+    <h1>YouBike 師大站點資訊</h1>
+    <div class="container" id="youbikeContainer"></div>
+
+    <script>
+        const apiUrl = "https://tcgbusfs.blob.core.windows.net/dotapp/youbike/v2/youbike_immediate.json";
+        const selectedStations = [
+            "YouBike2.0_師大公館校區學二舍",
+            "YouBike2.0_師範大學公館校區",
+            "YouBike2.0_師範大學公館校區_1",
+            "YouBike2.0_臺灣師範大學(圖書館)",
+            "YouBike2.0_和平龍泉街口",
+            "YouBike2.0_臺灣師範大學(浦城街)"
+        ];
+
+        fetch(apiUrl)
+            .then(response => response.json())
+            .then(data => {
+                const container = document.getElementById("youbikeContainer");
+
+                data.forEach(station => {
+                    if (selectedStations.includes(station.sna)) {
+                        const card = document.createElement("div");
+                        card.className = "card";
+
+                        card.innerHTML = `
+                            <div class="location">${station.sna.replace("YouBike2.0_", "")}</div>
+                            <div class="info">
+                                <div class="color_change1">空位數：${station.available_return_bikes}</div>
+                                <div>腳踏車數：${station.available_rent_bikes}</div>
+                                <div>總車位數：${station.total}</div>
+                            </div>
+                        `;
+                        container.appendChild(card);
+                    }
+                });
+            })
+            .catch(error => console.error("Error fetching data:", error));
+    </script>
+
+</body>
+</html>
