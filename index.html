@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>YouBike 站點資訊</title>
+    <title>YouBike 師大校區常用站點資訊</title>
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
@@ -19,8 +19,20 @@
             "YouBike2.0_師範大學公館校區_1",
             "YouBike2.0_臺灣師範大學(圖書館)",
             "YouBike2.0_和平龍泉街口",
-            "YouBike2.0_臺灣師範大學(浦城街)"
+            "YouBike2.0_臺灣師範大學(浦城街)",
+            "YouBike2.0_景美污水抽水站"
         ];
+
+        // 自定義站點名稱對應表
+        const stationNames = {
+            "YouBike2.0_師大公館校區學二舍": "學二舍旁邊",
+            "YouBike2.0_師範大學公館校區": "公館校門全家那側",
+            "YouBike2.0_師範大學公館校區_1": "公館校門 綜合樓那側",
+            "YouBike2.0_臺灣師範大學(圖書館)": "師範大學圖書館",
+            "YouBike2.0_和平龍泉街口": "天下佈武巷子",
+            "YouBike2.0_臺灣師範大學(浦城街)": "圖書館對面",
+            "YouBike2.0_景美污水抽水站": "福和橋下"
+        };
 
         fetch(apiUrl)
             .then(response => response.json())
@@ -33,7 +45,7 @@
                         card.className = "card";
 
                         card.innerHTML = `
-                            <div class="location">${station.sna.replace("YouBike2.0_", "")}</div>
+                            <div class="location">${stationNames[station.sna] || station.sna}</div>
                             <div class="info">
                                 <div class="color_change1">空位數：${station.available_return_bikes}</div>
                                 <div>腳踏車數：${station.available_rent_bikes}</div>
